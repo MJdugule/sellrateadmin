@@ -22,13 +22,14 @@ class _HomeWidgetState extends State<HomeWidget> {
           color: widget.color, borderRadius: BorderRadius.circular(20)),
       child: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               widget.title,
               style: GoogleFonts.poppins(
                 fontWeight: FontWeight.w600,
                 color: Colors.black,
-                fontSize: 21,
+                fontSize: 25,
               ),
               textAlign: TextAlign.center,
             ), Text(
@@ -36,7 +37,7 @@ class _HomeWidgetState extends State<HomeWidget> {
               style: GoogleFonts.poppins(
                 fontWeight: FontWeight.w600,
                 color: Colors.black,
-                fontSize: 18,
+                fontSize: 35,
               ),
               textAlign: TextAlign.center,
             ),

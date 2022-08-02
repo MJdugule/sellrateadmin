@@ -1,12 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:sellsrateadmin/constants.dart';
 import 'package:sellsrateadmin/providers/auth_provider.dart';
 import 'package:sellsrateadmin/screens/home/homescreen.dart';
 import 'package:sellsrateadmin/widget/apptext_field.dart';
+import 'package:sellsrateadmin/widget/no_account_text.dart';
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
@@ -55,37 +57,7 @@ class _BodyState extends State<Body> {
               return null;
             },
           ),
-          AppTextField(
-            icon: IconButton(
-              icon: _visible
-                  ? Icon(
-                Icons.visibility_off,
-                // color: redTextColor,
-              )
-                  : Icon(
-                Icons.visibility,
-                // color: mainColor,
-              ),
-              onPressed: () {
-                setState(() {
-                  _visible = !_visible;
-                });
-              },
-            ),
-            obstrust: _visible == false ? true : false,
-            hintText: 'Password',
-            controller: passwordController,
-            validator: (password) {
-              if (password!.isEmpty) {
-                return 'Password field cannot be empty';
-              } else if (password.length < 8) {
-                return 'Enter a longer password';
-              } else if (!password.contains(RegExp(r"[0-9]"))) {
-                return 'Password must contain a number';
-              }
-              return null;
-            },
-          ),
+       
           AppTextField(
             obstrust: _visible2 == false ? true : false,
             icon: IconButton(
@@ -130,7 +102,7 @@ class _BodyState extends State<Body> {
                   ),
                   onPressed: ()async{
                     if (_formkey.currentState!.validate()) {
-
+                      EasyLoading.show();
 
                       setState(() {
                         _loading = true;
@@ -140,13 +112,14 @@ class _BodyState extends State<Body> {
                               ?.user;
 
                       if (user != null) {
+                        EasyLoading.dismiss();
                         setState(() {
                           _loading = false;
                         });
 
 
-                        _authData.createUser(
-                            id: user.uid, password: passwordController.text, email: emailController.text);
+                        // _authData.createUser(
+                        //     id: user.uid, password: passwordController.text, email: emailController.text);
                         Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) {
                           return HomeScreen();
                         })));
@@ -160,7 +133,7 @@ class _BodyState extends State<Body> {
                               mainAxisAlignment:
                               MainAxisAlignment.spaceBetween,
                               children: [
-                                //Text(_authData.error),
+                                Text(_authData.error),
                                 Icon(
                                   Icons.cancel_outlined,
                                   color: Colors.red,
@@ -177,15 +150,19 @@ class _BodyState extends State<Body> {
                     }
                   },
                   child: Text(
-                    'SignUp',
+                    'Login',
                     style: GoogleFonts.poppins(
                       fontSize: 18,
                       fontStyle: FontStyle.normal,
                       color: Colors.white,
                     ),
                   )),
+
+                 
             ),
-          )
+          ),
+          SizedBox(height: 20,),
+           NoAccountText()
         ],
       ),
     );

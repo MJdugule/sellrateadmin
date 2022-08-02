@@ -3,7 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sellsrateadmin/services/user_service.dart';
 
-class AuthenticationProvider extends ChangeNotifier{
+class AuthenticationProvider with ChangeNotifier{
+  String error = '';
  
   Future<UserCredential?>? register(email, password) async {
    
@@ -20,6 +21,7 @@ class AuthenticationProvider extends ChangeNotifier{
                 // }
                
               }catch(e){
+                 error = e.toString();
                 // progressDialog.dismiss();
                 UserService().showMyDialog(
                   //context: BuildContext(),
@@ -93,5 +95,44 @@ class AuthenticationProvider extends ChangeNotifier{
     } catch (e) {
       print('Error $e');
     }
+  }
+
+  double subTotal = 0.0;
+  int cartQty = 0;
+  QuerySnapshot? snapshot;
+  DocumentSnapshot? document;
+  double saving = 0.0;
+  double distance = 0.0;
+  bool cod = false;
+  List cartList = [];
+  Future<double> getuserTotal() async {
+    var cartTotal = 0.0;
+    var saving = 0.0;
+    List _newList = [];
+    QuerySnapshot snapshot =
+        await FirebaseFirestore.instance.collection('products').get();
+    if (snapshot == null) {
+      
+    }
+    snapshot.docs.forEach((doc) {
+      if(!_newList.contains(doc.data())){
+        _newList.add(doc.data());
+        this.cartList = _newList;
+        notifyListeners();
+      }
+      cartTotal = cartTotal + doc['total'];
+      saving =
+          saving + ((doc['comparedPrice'] - doc['price']) > 0
+              ? doc['comparedPrice'] - doc['price']
+              : 0);
+    });
+
+    this.subTotal = cartTotal;
+    this.cartQty = snapshot.size;
+    this.snapshot = snapshot;
+    this.saving = saving;
+    notifyListeners();
+
+    return cartTotal;
   }
 }

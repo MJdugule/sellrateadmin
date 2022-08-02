@@ -16,16 +16,19 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-                 SafeArea(child: Container()),
-           Text(
-                "Register Account",
-                style: headingStyle,
-              ),
-        HomeBoxes()
-        ],
+      body: Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+                   SafeArea(child: Container()),
+             Text(
+                  "Hi Admin",
+                  style: headingStyle,
+                ),
+          HomeBoxes()
+          ],
+        ),
       ),
     );
   }
