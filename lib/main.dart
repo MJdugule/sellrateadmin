@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        scaffoldBackgroundColor: Color.fromARGB(255, 253, 227, 228),
+      //  scaffoldBackgroundColor: Color.fromARGB(255, 252, 243, 244),
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
       home: const AuthWrapper(),

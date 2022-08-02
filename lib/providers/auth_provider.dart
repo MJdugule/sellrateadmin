@@ -7,14 +7,11 @@ class AuthenticationProvider with ChangeNotifier{
   String error = '';
  
   Future<UserCredential?>? register(email, password) async {
-   
-    UserService().getAdminCredentials(email).then((value) async {
-        if(value.exists){
-          if(value['email'] == email){
-            if(value['password']== password){
 
+
+              UserCredential? userCredential;
               try{
-                UserCredential userCredential = await FirebaseAuth.instance.signInAnonymously();
+                userCredential = await FirebaseAuth.instance.signInAnonymously();
                 // if(userCredential != null){
                 //   progressDialog.dismiss();
                 //   Navigator.pushReplacementNamed(context, HomeScreen.id);
@@ -30,34 +27,17 @@ class AuthenticationProvider with ChangeNotifier{
                 );
                 
               }
-              return;
-            }
+              return userCredential;
+
            // progressDialog.dismiss();
-          UserService().showMyDialog(
-            //context: context,
-            title: 'Incorrect Password',
-            message: 'Password you have entered is invalid'
-          );
-            return;
-          }
+
           //progressDialog.dismiss();
-          UserService().showMyDialog(
-           // context: context,
-            title: 'Invalid Username',
-            message: 'Username you have entered is incorrect'
-          );
-        }
-        //progressDialog.dismiss();
-          UserService().showMyDialog(
-           // context: context,
-            title: 'Invalid Username',
-            message: 'Username you have entered is incorrect'
-          );
-      });
+
+
 
     notifyListeners();
     
-  
+
     
   }
 
