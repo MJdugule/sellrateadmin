@@ -5,9 +5,10 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomeWidget extends StatefulWidget {
-  const HomeWidget({Key? key, required this.color, required this.text}) : super(key: key);
+  const HomeWidget({Key? key, required this.color, required this.text, required this.title}) : super(key: key);
   final Color color;
   final String text;
+  final String title;
 
   @override
   State<HomeWidget> createState() => _HomeWidgetState();
@@ -20,14 +21,26 @@ class _HomeWidgetState extends State<HomeWidget> {
       decoration: BoxDecoration(
           color: widget.color, borderRadius: BorderRadius.circular(20)),
       child: Center(
-        child: Text(
-          widget.text,
-          style: GoogleFonts.poppins(
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
-            fontSize: 18,
-          ),
-          textAlign: TextAlign.center,
+        child: Column(
+          children: [
+            Text(
+              widget.title,
+              style: GoogleFonts.poppins(
+                fontWeight: FontWeight.w600,
+                color: Colors.black,
+                fontSize: 21,
+              ),
+              textAlign: TextAlign.center,
+            ), Text(
+              widget.text,
+              style: GoogleFonts.poppins(
+                fontWeight: FontWeight.w600,
+                color: Colors.black,
+                fontSize: 18,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
       ),
       // ),

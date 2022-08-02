@@ -31,30 +31,75 @@ class _HomeBoxesState extends State<HomeBoxes> {
                         //         builder: (context) => AllTasksScreen()));
                       },
                       child: StreamBuilder<QuerySnapshot>(
-                        stream: FirebaseFirestore.instance.collection('Products').snapshots(),
+                        stream: FirebaseFirestore.instance.collection('products').snapshots(),
                         builder: ((BuildContext context, AsyncSnapshot<QuerySnapshot> snapShot) {
                         if(snapShot.hasError){
-
+                          return Text('data');
                         }
+                        if(snapShot.hasData){
+                          return HomeWidget(color: Colors.red, title: 'Total Users', text: '${snapShot.data?.docs.length}');
+                        }
+                        return Container();
                       }))
-                      HomeWidget(color: Colors.red, text: 'Total Users')),
-                  HomeWidget(color: Colors.lime, text: 'Total Products'),
-                  InkWell(
-                    onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => SharedTask()));
-                      },
-                      child: HomeWidget(color: Colors.black, text: 'Shared Tasks')),
+                      ),
                   InkWell(
                       onTap: () {
                         // Navigator.push(
                         //     context,
                         //     MaterialPageRoute(
-                        //         builder: (context) => BucketList()));
+                        //         builder: (context) => AllTasksScreen()));
                       },
-                      child: HomeWidget(color: Colors.cyan, text: 'My Lists')),
+                      child: StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance.collection('products').snapshots(),
+                        builder: ((BuildContext context, AsyncSnapshot<QuerySnapshot> snapShot) {
+                        if(snapShot.hasError){
+                          return Text('data');
+                        }
+                        if(snapShot.hasData){
+                          return HomeWidget(color: Colors.lime, title: 'Total Products', text: '${snapShot.data?.docs.length}');
+                        }
+                        return Container();
+                      }))
+                      ),
+                  InkWell(
+                      onTap: () {
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => AllTasksScreen()));
+                      },
+                      child: StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance.collection('products').snapshots(),
+                        builder: ((BuildContext context, AsyncSnapshot<QuerySnapshot> snapShot) {
+                        if(snapShot.hasError){
+                          return Text('data');
+                        }
+                        if(snapShot.hasData){
+                          return HomeWidget(color: Colors.black, title: 'Shared Tasks', text: '${snapShot.data?.docs.length}');
+                        }
+                        return Container();
+                      }))
+                      ),
+                  InkWell(
+                      onTap: () {
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => AllTasksScreen()));
+                      },
+                      child: StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance.collection('products').snapshots(),
+                        builder: ((BuildContext context, AsyncSnapshot<QuerySnapshot> snapShot) {
+                        if(snapShot.hasError){
+                          return Text('data');
+                        }
+                        if(snapShot.hasData){
+                          return HomeWidget(color: Colors.cyan, title: 'My Lists', text: '${snapShot.data?.docs.length}');
+                        }
+                        return Container();
+                      }))
+                      ),
+
                 ],
               ),
             );

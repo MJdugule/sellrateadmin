@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:sellsrateadmin/screens/home/homescreen.dart';
+import 'package:sellsrateadmin/screens/signIn/sign_in.dart';
 import 'package:sellsrateadmin/screens/signUp/signup_screen.dart';
 
 class AuthWrapper extends StatefulWidget {
@@ -23,11 +24,11 @@ class _AuthWrapperState extends State<AuthWrapper> {
       FirebaseAuth.instance.authStateChanges().listen((User? user) {
         if (user == null) {
           Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) {
-            return HomeScreen();
+            return SignInScreen();
           })));
         } else {
           Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) {
-            return SignUpScreen();
+            return HomeScreen();
           })));
         }
       });
