@@ -19,14 +19,10 @@ class AuthenticationProvider with ChangeNotifier{
                
               }catch(e){
                  error = e.toString();
-                // progressDialog.dismiss();
-                UserService().showMyDialog(
-                  //context: BuildContext(),
-                  title: 'Login',
-                  message: '${e.toString()}'
-                );
+              
                 
               }
+              notifyListeners();
               return userCredential;
 
            // progressDialog.dismiss();
@@ -35,7 +31,7 @@ class AuthenticationProvider with ChangeNotifier{
 
 
 
-    notifyListeners();
+    
     
 
     

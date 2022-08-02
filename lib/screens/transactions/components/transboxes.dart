@@ -5,15 +5,16 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:sellsrateadmin/providers/product_provider.dart';
 import 'package:sellsrateadmin/screens/home/component/home_widget.dart';
+import 'package:sellsrateadmin/screens/transactions/components/trans_widget.dart';
 
-class HomeBoxes extends StatefulWidget {
-  const HomeBoxes({Key? key}) : super(key: key);
+class TransBoxes extends StatefulWidget {
+  const TransBoxes({Key? key}) : super(key: key);
 
   @override
-  State<HomeBoxes> createState() => _HomeBoxesState();
+  State<TransBoxes> createState() => _TransBoxesState();
 }
 
-class _HomeBoxesState extends State<HomeBoxes> {
+class _TransBoxesState extends State<TransBoxes> {
   @override
   Widget build(BuildContext context) {
     final _productProvider = Provider.of<ProductProvider>(context);
@@ -24,11 +25,11 @@ class _HomeBoxesState extends State<HomeBoxes> {
         constraints: const BoxConstraints(maxWidth: 550),
         child: GridView.count(
           physics: NeverScrollableScrollPhysics(),
-          crossAxisCount: 2,
+          crossAxisCount: 3,
           shrinkWrap: true,
-          childAspectRatio: (150 / 130),
+          childAspectRatio: (180 / 130),
           mainAxisSpacing: 30,
-          crossAxisSpacing: 20,
+          crossAxisSpacing: 10,
           children: [
              InkWell(
                 onTap: () {
@@ -37,23 +38,11 @@ class _HomeBoxesState extends State<HomeBoxes> {
                   //     MaterialPageRoute(
                   //         builder: (context) => AllTasksScreen()));
                 },
-                child: HomeWidget(
+                child: TransactionWidget(
                   icon: Icons.monetization_on
                   ,
-                    color: Color.fromARGB(255, 165, 98, 207),
-                    title: 'Total Income',
-                    text: '\$${_productProvider.price}')),
-            InkWell(
-                onTap: () {
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => AllTasksScreen()));
-                },
-                child: HomeWidget(
-                  icon: Icons.person,
-                    color: Color.fromARGB(255, 218, 138, 142),
-                    title: 'Total Users',
+                    color: Color.fromARGB(255, 98, 207, 154),
+                    title: 'Approved',
                     text: '${_productProvider.productQty}')),
             InkWell(
                 onTap: () {
@@ -62,24 +51,25 @@ class _HomeBoxesState extends State<HomeBoxes> {
                   //     MaterialPageRoute(
                   //         builder: (context) => AllTasksScreen()));
                 },
-                child: HomeWidget(
+                child: TransactionWidget(
+                  icon: Icons.person,
+                    color: Color.fromARGB(255, 245, 146, 17),
+                    title: 'Pending',
+                    text: '${_productProvider.productQty}')),
+            InkWell(
+                onTap: () {
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => AllTasksScreen()));
+                },
+                child: TransactionWidget(
                   icon: Icons.shopping_bag,
-                    color: Color.fromARGB(255, 160, 161, 229),
-                    title: 'Total Products',
+                    color: Color.fromARGB(255, 245, 89, 17),
+                    title: 'Declined',
                     text: '${_productProvider.productQty}')),
            
-            InkWell(
-                onTap: () {
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => AllTasksScreen()));
-                },
-                child: HomeWidget(
-                  icon: Icons.wallet,
-                    color: Color.fromARGB(255, 244, 208, 102),
-                    title: 'Today Sales',
-                    text: '\$${_productProvider.price}')),
+       
           ],
         ),
       ),

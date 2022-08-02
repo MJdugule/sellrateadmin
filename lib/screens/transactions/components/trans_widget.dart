@@ -4,37 +4,35 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class HomeWidget extends StatefulWidget {
-  const HomeWidget({Key? key, required this.color, required this.text, required this.title, required this.icon}) : super(key: key);
+class TransactionWidget extends StatefulWidget {
+  const TransactionWidget({Key? key, required this.color, required this.text, required this.title, required this.icon}) : super(key: key);
   final Color color;
   final String text;
   final String title;
   final IconData icon;
   @override
-  State<HomeWidget> createState() => _HomeWidgetState();
+  State<TransactionWidget> createState() => _TransactionWidgetState();
 }
 
-class _HomeWidgetState extends State<HomeWidget> {
+class _TransactionWidgetState extends State<TransactionWidget> {
   @override
   Widget build(BuildContext context) {
     return    Container(
       decoration: BoxDecoration(
-          color: widget.color, borderRadius: BorderRadius.circular(20)),
+          color: widget.color, borderRadius: BorderRadius.circular(12)),
       child: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(10.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CircleAvatar(backgroundColor: Colors.white, radius: 17, child: Center(child: 
-            Icon(widget.icon, color: widget.color, size: 19,),),),
-            Spacer(),
+            
             Text(
               widget.text,
               style: GoogleFonts.poppins(
                 fontWeight: FontWeight.w600,
                 color: Colors.white,
-                fontSize: 25,
+                fontSize: 20,
               ),
               textAlign: TextAlign.center,
             ),
@@ -44,9 +42,9 @@ class _HomeWidgetState extends State<HomeWidget> {
               style: GoogleFonts.poppins(
                 fontWeight: FontWeight.w600,
                 color: Colors.white,
-                fontSize: 15,
+                fontSize: 13,
               ),
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.start,
             ), 
           ],
         ),

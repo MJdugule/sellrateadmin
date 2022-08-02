@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
@@ -12,11 +13,14 @@ class HomeChart extends StatefulWidget {
 
 class _HomeChartState extends State<HomeChart> {
   List<_SalesData> data = [
-    _SalesData('Jan', 35),
-    _SalesData('Feb', 28),
-    _SalesData('Mar', 34),
-    _SalesData('Apr', 32),
-    _SalesData('May', 40)
+    _SalesData('Jan', 0),
+    _SalesData('Feb', 0),
+    _SalesData('Mar', 0),
+    _SalesData('Apr', 0),
+    _SalesData('May', 0),
+    _SalesData('June', 0),
+    _SalesData('July', 0),
+    _SalesData('August', 0),
   ];
   @override
   Widget build(BuildContext context) {
@@ -29,7 +33,9 @@ class _HomeChartState extends State<HomeChart> {
               children: [
                 SfCartesianChart(primaryXAxis: CategoryAxis(),
                     // Chart title
-                    title: ChartTitle(text: 'Monthly Sales'),
+                    title: ChartTitle(
+                      
+                      text: 'Monthly Sales Overview', alignment: ChartAlignment.near, textStyle: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 16)),
                     // Enable legend
                     //legend: Legend(isVisible: true),
                     // Enable tooltip

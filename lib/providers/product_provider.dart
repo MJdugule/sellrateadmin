@@ -7,7 +7,7 @@ class ProductProvider with ChangeNotifier{
   int productQty = 0;
   QuerySnapshot? snapshot;
   DocumentSnapshot? document;
-  double saving = 0.0;
+  double price = 0.0;
   double distance = 0.0;
   bool cod = false;
   List productList = [];
@@ -27,16 +27,14 @@ class ProductProvider with ChangeNotifier{
         notifyListeners();
       }
       cartTotal = cartTotal + doc['total'];
-      saving =
-          saving + ((doc['comparedPrice'] - doc['price']) > 0
-              ? doc['comparedPrice'] - doc['price']
-              : 0);
+      price =
+          price + doc['prices'];
     });
 
     this.subTotal = cartTotal;
     this.productQty = snapshot.size;
     this.snapshot = snapshot;
-    this.saving = saving;
+    this.price = price;
     notifyListeners();
 
     return cartTotal;

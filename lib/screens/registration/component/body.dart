@@ -11,7 +11,6 @@ import 'package:provider/provider.dart';
 import 'package:sellsrateadmin/constants.dart';
 import 'package:sellsrateadmin/providers/auth_provider.dart';
 import 'package:sellsrateadmin/screens/home/homescreen.dart';
-import 'package:sellsrateadmin/screens/registration/reg_screen.dart';
 import 'package:sellsrateadmin/services/user_service.dart';
 import 'package:sellsrateadmin/widget/apptext_field.dart';
 import 'package:sellsrateadmin/widget/default_button.dart';
@@ -30,7 +29,12 @@ class _BodyState extends State<Body> {
   final TextEditingController numberController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPassController = TextEditingController();
-  
+  final TextEditingController stateController = TextEditingController();
+  TextEditingController dobController = TextEditingController();
+  final TextEditingController lgaController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController townController = TextEditingController();
+  final TextEditingController countryController = TextEditingController();
   final _formkey = GlobalKey<FormState>();
   DateTime _birth = DateTime.now();
   String? code;
@@ -49,7 +53,7 @@ class _BodyState extends State<Body> {
         children: [
           SafeArea(child: Container()),
            Text(
-                "Create Your Account",
+                "Welcome",
                 style: headingStyle,
               ),
              
@@ -78,7 +82,62 @@ class _BodyState extends State<Body> {
               return null;
             },
           ),
-          
+          dobField(date),
+          AppTextField(
+            obstrust: false,
+            hintText: 'Country',
+            controller: countryController,
+            validator: (country) {
+              if (country!.isEmpty) {
+                return 'This field cannot be empty';
+              }
+    
+              return null;
+            },
+          ),
+          AppTextField(
+            obstrust: false,
+            hintText: 'State',
+            controller: stateController,
+            validator: (state) {
+              if (state!.isEmpty) {
+                return 'This field cannot be empty';
+              }
+    
+              return null;
+            },
+          ),
+          AppTextField(
+            obstrust: false,
+            hintText: 'LGA',
+            controller: lgaController,
+            validator: null,
+          ),
+          AppTextField(
+            obstrust: false,
+            hintText: 'Town/City',
+            controller: townController,
+            validator: (town) {
+              if (town!.isEmpty) {
+                return 'This field cannot be empty';
+              }
+    
+              return null;
+            },
+          ),
+          AppTextField(
+            obstrust: false,
+            hintText: 'Full Address',
+            controller: addressController,
+            validator: (address) {
+              if (address!.isEmpty) {
+                return 'This field cannot be empty';
+              }
+    
+              return null;
+            },
+          ),
+          phoneInput(),
           AppTextField(
             obstrust: false,
             hintText: 'Email',
@@ -184,7 +243,7 @@ class _BodyState extends State<Body> {
                                       _authData.createUser(
                                           id: user.uid, password: passwordController.text, email: emailController.text);
                                       Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) {
-                                        return RegistrationScreen();
+                                        return HomeScreen();
                                       })));
                                  
                                 } else {
@@ -196,7 +255,7 @@ class _BodyState extends State<Body> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text(_authData.error),
+                                              //Text(_authData.error),
                                               Icon(
                                                 Icons.cancel_outlined,
                                                 color: Colors.red,
@@ -227,5 +286,152 @@ class _BodyState extends State<Body> {
     );
   }
 
-  
+  Widget phoneInput() {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 7, horizontal: 20),
+      child: Container(
+       
+        child: IntlPhoneField(
+          onSubmitted: (p0) {
+            print(p0);
+            //  (value) {
+            // print('$code${numberController.text}');
+            // setState(() {
+            //   code = value.toString();
+            //   errorphone = null;
+            //   erroremail = null;
+            //   erroruser = null;
+            // });
+          },
+          onCountryChanged: (value) {
+            setState(() {
+              numberController.clear();
+            });
+          },
+          onChanged: (value) {
+            // print('$code${numberController.text}');
+            setState(() {
+              code = value.countryCode.toString();
+            });
+          },
+          controller: numberController,
+          validator: (number) {
+            if (numberController.text.isEmpty) {
+              return 'Number field cannot be empty';
+            } else if (numberController.text
+                .contains(RegExp(r"[a-zA-Z+_.-]"))) {
+              return 'You can only type numbers';
+            }
+            return null;
+          },
+          dropdownTextStyle: TextStyle(
+              fontFamily: 'PoppinsMedium',
+              fontSize: 14,
+              fontWeight: FontWeight.w300),
+          initialCountryCode: 'NG',
+          dropdownIconPosition: IconPosition.leading,
+          showCountryFlag: false,
+          disableLengthCheck: true,
+          decoration: InputDecoration(
+            isDense: true,
+            //  errorText: errorphone,
+            contentPadding: const EdgeInsets.fromLTRB(13, 0, 0, 0),
+            hintText: 'Phone no',
+            hintStyle: TextStyle(
+                color: Colors.grey[500],
+                fontFamily: 'PoppinsMedium',
+                fontSize: 14),
+            enabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xFF999999)),
+                // ignore: unnecessary_const
+                borderRadius: BorderRadius.all(const Radius.circular(6))),
+            focusedBorder: const OutlineInputBorder(
+                //borderSide: BorderSide(color: mainColor),
+                borderRadius: BorderRadius.all(Radius.circular(6))),
+            focusedErrorBorder: const OutlineInputBorder(
+              // borderSide: BorderSide(color: mainColor),
+              borderRadius: BorderRadius.all(Radius.circular(6)),
+            ),
+            errorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.red),
+              borderRadius: BorderRadius.all(Radius.circular(6)),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget dobField(date) {
+    return InkWell(
+      onTap: () {
+        showDialog(
+            context: context,
+            builder: ((context) {
+              return Dialog(
+                child: SizedBox(
+                  height: 260,
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 200,
+                        child: CupertinoDatePicker(
+                            use24hFormat: true,
+                            mode: CupertinoDatePickerMode.date,
+                            initialDateTime: _birth,
+                            onDateTimeChanged: (DateTime value) {
+                              setState(() {
+                                _birth = value;
+                                dobController.text = date;
+                              });
+                            }),
+                      ),
+                      TextButton(
+                          style: ElevatedButton.styleFrom(
+                            onSurface: Colors.white,
+                            primary: Colors.black, //background color of button
+                            elevation: 8, //elevation of button
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(6)),
+                          ),
+                          onPressed: () async {
+                            setState(() {
+                              dobController.text = date;
+                            });
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            'Done',
+                            style: GoogleFonts.poppins(
+                                fontSize: 15,
+                                fontStyle: FontStyle.normal,
+                                color: Colors.white,
+                                decoration: TextDecoration.underline),
+                          ))
+                    ],
+                  ),
+                ),
+              );
+            }));
+      },
+      child: AppTextField(
+        enabled: false,
+        obstrust: false,
+        hintText: 'Date of birth',
+        controller: dobController,
+        validator: (dob) {
+          // final bool _isValid =
+          //     EmailValidator.validate(
+          //         emailController.text);
+          if (dob!.isEmpty) {
+            return 'field cannot be empty';
+          }
+          // else if (!_isValid) {
+          //   return 'Invalid email';
+          // }
+          return null;
+        },
+      ),
+    );
+  }
 }

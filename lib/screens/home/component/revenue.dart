@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:sellsrateadmin/providers/product_provider.dart';
 
 class Revenue extends StatefulWidget {
   const Revenue({Key? key}) : super(key: key);
@@ -12,6 +14,8 @@ class Revenue extends StatefulWidget {
 class _RevenueState extends State<Revenue> {
   @override
   Widget build(BuildContext context) {
+     final _productProvider = Provider.of<ProductProvider>(context);
+    _productProvider.getproductTotal();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal:15.0),
       child: Container(
@@ -40,7 +44,7 @@ class _RevenueState extends State<Revenue> {
                 ),
                 textAlign: TextAlign.center,
               ), Text(
-                '\$455',
+                '\$${_productProvider.price}',
                 style: GoogleFonts.poppins(
                   fontWeight: FontWeight.w600,
                   color: Colors.black,

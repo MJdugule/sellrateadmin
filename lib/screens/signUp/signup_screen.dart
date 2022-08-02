@@ -15,10 +15,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: [
-          Body()
-        ],
+      body: Center(
+        child: ListView(
+          children: [
+            Body()
+          ],
+        ),
       ),
     );
   }

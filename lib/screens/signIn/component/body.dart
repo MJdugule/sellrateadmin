@@ -37,7 +37,7 @@ class _BodyState extends State<Body> {
         children: [
           SafeArea(child: Container()),
           Text(
-            "Login to Account",
+            "Login",
             style: headingStyle,
           ),
           Text(
@@ -81,8 +81,6 @@ class _BodyState extends State<Body> {
             validator: (confirm) {
               if (confirm!.isEmpty) {
                 return 'Password field cannot be empty';
-              } else if (confirm != passwordController.text) {
-                return 'Passwords do not match';
               }
               return null;
             },
@@ -101,6 +99,7 @@ class _BodyState extends State<Body> {
                         borderRadius: BorderRadius.circular(6)),
                   ),
                   onPressed: ()async{
+                    FocusScope.of(context).unfocus();
                     if (_formkey.currentState!.validate()) {
                       EasyLoading.show();
 
