@@ -1,37 +1,37 @@
 {
   "project_info": {
-    "project_number": "412117282173",
-    "project_id": "sellsrate-f3119",
-    "storage_bucket": "sellsrate-f3119.appspot.com"
+    "project_number": "1035261206268",
+    "project_id": "sellsrate-9133d",
+    "storage_bucket": "sellsrate-9133d.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:412117282173:android:0302dea38a3bf5038c3014",
+        "mobilesdk_app_id": "1:1035261206268:android:0ae96fe50e74319b53c179",
         "android_client_info": {
           "package_name": "com.sellsrate.sellsrateadmin"
         }
       },
       "oauth_client": [
         {
-          "client_id": "412117282173-60q4b9va5jolfr5umabtlaldj8aj4igd.apps.googleusercontent.com",
+          "client_id": "1035261206268-2u2b455oglrh87mu3toqel4aab6kvlgu.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDw818qzjEyxM-YJdFdGtSUPzhoDxUNd-k"
+          "current_key": "AIzaSyAsuc2YxA2DZSVCzvC2AjjHPCWYT8ZHemU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "412117282173-60q4b9va5jolfr5umabtlaldj8aj4igd.apps.googleusercontent.com",
+              "client_id": "1035261206268-2u2b455oglrh87mu3toqel4aab6kvlgu.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "412117282173-gc7nl7qj3j9btbpc8vgkpkadfa4jd52v.apps.googleusercontent.com",
+              "client_id": "1035261206268-ktgc73alnl83s6glbb56b586ftffb200.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.sellsrate.sellsrateapp"
@@ -43,31 +43,31 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:412117282173:android:46629625c0525ba68c3014",
+        "mobilesdk_app_id": "1:1035261206268:android:5068e018d6639ea753c179",
         "android_client_info": {
           "package_name": "com.sellsrate.sellsrateapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "412117282173-60q4b9va5jolfr5umabtlaldj8aj4igd.apps.googleusercontent.com",
+          "client_id": "1035261206268-2u2b455oglrh87mu3toqel4aab6kvlgu.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDw818qzjEyxM-YJdFdGtSUPzhoDxUNd-k"
+          "current_key": "AIzaSyAsuc2YxA2DZSVCzvC2AjjHPCWYT8ZHemU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "412117282173-60q4b9va5jolfr5umabtlaldj8aj4igd.apps.googleusercontent.com",
+              "client_id": "1035261206268-2u2b455oglrh87mu3toqel4aab6kvlgu.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "412117282173-gc7nl7qj3j9btbpc8vgkpkadfa4jd52v.apps.googleusercontent.com",
+              "client_id": "1035261206268-ktgc73alnl83s6glbb56b586ftffb200.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.sellsrate.sellsrateapp"
