@@ -15,7 +15,7 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
        return Padding(
-         padding: const EdgeInsets.only(left:16.0, top: 20),
+         padding: const EdgeInsets.only(left:16.0, top: 20, right: 16),
          child: Column(
            crossAxisAlignment: CrossAxisAlignment.start,
            mainAxisAlignment: MainAxisAlignment.start,
@@ -34,11 +34,19 @@ class _BodyState extends State<Body> {
 
               if(!snapshot.hasData){
                 return Container(
-                  height: 200,
+
                   child: Center(child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('List is empty'),
+                      Container(
+                        height: 200,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                      border: Border.all(color: Colors.grey.shade200),
+                          borderRadius: BorderRadius.circular(16)
+                  ),
+                          child: Center(child: Text('No Transaction'))),
                      
                     ],
                   )),

@@ -30,7 +30,7 @@ class _BodyState extends State<Body> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPassController = TextEditingController();
   final TextEditingController stateController = TextEditingController();
-  TextEditingController dobController = TextEditingController();
+        TextEditingController dobController = TextEditingController();
   final TextEditingController lgaController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController townController = TextEditingController();
@@ -38,9 +38,6 @@ class _BodyState extends State<Body> {
   final _formkey = GlobalKey<FormState>();
   DateTime _birth = DateTime.now();
   String? code;
-  bool _visible = false;
-  bool _visible2 = false;
-  bool _loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -55,33 +52,13 @@ class _BodyState extends State<Body> {
            Text(
                 "Welcome",
                 style: headingStyle,
+              ),Text(
+                "Please complete your details",
+                style: GoogleFonts.poppins(),
               ),
              
               SizedBox(height: 20,),
-          AppTextField(
-            obstrust: false,
-            hintText: 'First Name',
-            controller: firstnameController,
-            validator: (email) {
-              if (email!.isEmpty) {
-                return 'First name field cannot be empty';
-              }
-    
-              return null;
-            },
-          ),
-          AppTextField(
-            obstrust: false,
-            hintText: 'Surname',
-            controller: surnameController,
-            validator: (surname) {
-              if (surname!.isEmpty) {
-                return 'Email field cannot be empty';
-              }
-    
-              return null;
-            },
-          ),
+
           dobField(date),
           AppTextField(
             obstrust: false,
@@ -138,77 +115,7 @@ class _BodyState extends State<Body> {
             },
           ),
           phoneInput(),
-          AppTextField(
-            obstrust: false,
-            hintText: 'Email',
-            controller: emailController,
-            validator: (email) {
-              if (email!.isEmpty) {
-                return 'Email field cannot be empty';
-              }
-              return null;
-            },
-          ),
-          AppTextField(
-            icon: IconButton(
-              icon: _visible
-                  ? Icon(
-                      Icons.visibility_off,
-                      // color: redTextColor,
-                    )
-                  : Icon(
-                      Icons.visibility,
-                      // color: mainColor,
-                    ),
-              onPressed: () {
-                setState(() {
-                  _visible = !_visible;
-                });
-              },
-            ),
-            obstrust: _visible == false ? true : false,
-            hintText: 'Password',
-            controller: passwordController,
-            validator: (password) {
-              if (password!.isEmpty) {
-                return 'Password field cannot be empty';
-              } else if (password.length < 8) {
-                return 'Enter a longer password';
-              } else if (!password.contains(RegExp(r"[0-9]"))) {
-                return 'Password must contain a number';
-              }
-              return null;
-            },
-          ),
-          AppTextField(
-            obstrust: _visible2 == false ? true : false,
-            icon: IconButton(
-              icon: _visible2
-                  ? Icon(
-                      Icons.visibility_off,
-                      // color: Colors.red,
-                    )
-                  : Icon(
-                      Icons.visibility,
-                      //  color: mainColor,
-                    ),
-              onPressed: () {
-                setState(() {
-                  _visible2 = !_visible2;
-                });
-              },
-            ),
-            hintText: 'Confirm Password',
-            controller: confirmPassController,
-            validator: (confirm) {
-              if (confirm!.isEmpty) {
-                return 'Password field cannot be empty';
-              } else if (confirm != passwordController.text) {
-                return 'Passwords do not match';
-              }
-              return null;
-            },
-          ),
+          SizedBox(height: 20,),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
@@ -223,24 +130,23 @@ class _BodyState extends State<Body> {
                                 borderRadius: BorderRadius.circular(6)),
                           ),
                           onPressed: ()async{
+                            FocusScope.of(context).unfocus();
                                     if (_formkey.currentState!.validate()) {
                                   EasyLoading.show();
                      
-                                setState(() {
-                                  _loading = true;
-                                });
-                                final User? user =
-                                    (await _authData.register(emailController.text, passwordController.text))
-                                        ?.user;
 
-                                if (user != null) {
-                                  setState(() {
+                                User? user;
+
+                                if (user!.uid != null) {
                                     EasyLoading.dismiss();
-                                    _loading = false;
-                                  });
 
                     
                                       _authData.createUser(
+                                        dob: dobController.text,
+                                        lga: lgaController.text,
+                                        state: stateController.text,
+                                        number: numberController.text,
+                                        address: addressController.text, country: countryController.text,
                                           id: user.uid, password: passwordController.text, email: emailController.text);
                                       Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) {
                                         return HomeScreen();
@@ -255,7 +161,7 @@ class _BodyState extends State<Body> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              //Text(_authData.error),
+
                                               Icon(
                                                 Icons.cancel_outlined,
                                                 color: Colors.red,
@@ -265,14 +171,12 @@ class _BodyState extends State<Body> {
                                           )));
                                 }
                               } else {
-                                setState(() {
-                                  _loading = false;
-                                });
+                                      EasyLoading.dismiss();
                                 //scaffoldMessage('Please complete all field');
                               }
                           },
                           child: Text(
-                            'SignUp',
+                            'Save',
                             style: GoogleFonts.poppins(
                                 fontSize: 18,
                                 fontStyle: FontStyle.normal,
