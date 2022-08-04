@@ -80,6 +80,7 @@ class _HomeBoxesState extends State<HomeBoxes> {
                     color: Color.fromARGB(255, 244, 208, 102),
                     title: 'Today Sales',
                     text: '\$${_productProvider.price}')),
+                    
           ],
         ),
       ),

@@ -89,10 +89,11 @@ class HomeScreenDrawer extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children:[
                               InkWell(
-                                onTap: ()async{
-                                  FirebaseAuth.instance.signOut().then((value) =>Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
+                                onTap: (){
+                                  FirebaseAuth.instance.signOut();
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
                                     return SignInScreen();
-                                  }), (route) => true) );
+                                  }));
                                   
                                 },
                                 child:  Padding(

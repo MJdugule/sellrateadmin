@@ -135,9 +135,9 @@ class _BodyState extends State<Body> {
                                   EasyLoading.show();
                      
 
-                                User? user;
+                                User? user = FirebaseAuth.instance.currentUser;
 
-                                if (user!.uid != null) {
+                                if (user != null) {
                                     EasyLoading.dismiss();
 
                     

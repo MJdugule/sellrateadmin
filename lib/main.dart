@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'SellsRate Admin',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
       //  scaffoldBackgroundColor: Color.fromARGB(255, 252, 243, 244),
