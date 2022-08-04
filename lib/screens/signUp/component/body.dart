@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -24,10 +25,10 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  FlutterSecureStorage storage = FlutterSecureStorage();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController firstnameController = TextEditingController();
   final TextEditingController surnameController = TextEditingController();
-  final TextEditingController numberController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPassController = TextEditingController();
   
@@ -164,6 +165,7 @@ class _BodyState extends State<Body> {
                                 borderRadius: BorderRadius.circular(6)),
                           ),
                           onPressed: ()async{
+                             FocusScope.of(context).unfocus();
                                     if (_formkey.currentState!.validate()) {
                                   EasyLoading.show();
                      
@@ -179,10 +181,12 @@ class _BodyState extends State<Body> {
                                     EasyLoading.dismiss();
                                     _loading = false;
                                   });
-
                     
                                       _authData.createUser(
+                                        firstName: firstnameController.text,
+                                        surname: surnameController.text,
                                           id: user.uid, password: passwordController.text, email: emailController.text);
+                                          await storage.write(key: 'firstname', value: firstnameController.text);
                                       Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) {
                                         return RegistrationScreen();
                                       })));

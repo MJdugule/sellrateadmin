@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -23,6 +24,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  FlutterSecureStorage storage = FlutterSecureStorage();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController firstnameController = TextEditingController();
   final TextEditingController surnameController = TextEditingController();
@@ -132,27 +134,30 @@ class _BodyState extends State<Body> {
                           onPressed: ()async{
                             FocusScope.of(context).unfocus();
                                     if (_formkey.currentState!.validate()) {
+                                     var first = await storage.read(key: 'firstname');
                                   EasyLoading.show();
                      
 
-                                User? user;
+                                User? user= FirebaseAuth.instance.currentUser;
 
-                                if (user!.uid != null) {
+                                if (user != null) {
                                     EasyLoading.dismiss();
 
                     
-                                      _authData.createUser(
+                                      _authData.updateUser(
+                                        firstName: first,
                                         dob: dobController.text,
                                         lga: lgaController.text,
                                         state: stateController.text,
                                         number: numberController.text,
                                         address: addressController.text, country: countryController.text,
-                                          id: user.uid, password: passwordController.text, email: emailController.text);
+                                          id: user.uid, );
                                       Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) {
                                         return HomeScreen();
                                       })));
                                  
                                 } else {
+                                  EasyLoading.dismiss();
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(
                                           backgroundColor: Colors.black87,
@@ -161,7 +166,7 @@ class _BodyState extends State<Body> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-
+                                              Text(_authData.error, style: TextStyle(color: Colors.white),),
                                               Icon(
                                                 Icons.cancel_outlined,
                                                 color: Colors.red,

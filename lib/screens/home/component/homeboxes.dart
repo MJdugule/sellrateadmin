@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
+import 'package:sellsrateadmin/providers/auth_provider.dart';
 import 'package:sellsrateadmin/providers/product_provider.dart';
 import 'package:sellsrateadmin/screens/home/component/home_widget.dart';
 
@@ -16,8 +17,12 @@ class HomeBoxes extends StatefulWidget {
 class _HomeBoxesState extends State<HomeBoxes> {
   @override
   Widget build(BuildContext context) {
+    final _authProvider = Provider.of<AuthenticationProvider>(context);
+    _authProvider.getuserTotal();
+
     final _productProvider = Provider.of<ProductProvider>(context);
     _productProvider.getproductTotal();
+    //_productProvider.gettodayProduct();
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal:15.0),
       child: ConstrainedBox(
@@ -42,7 +47,7 @@ class _HomeBoxesState extends State<HomeBoxes> {
                   ,
                     color: Color.fromARGB(255, 165, 98, 207),
                     title: 'Total Income',
-                    text: '\$${_productProvider.price}')),
+                    text: '\${_productProvider.price}')),
             InkWell(
                 onTap: () {
                   // Navigator.push(
@@ -54,7 +59,7 @@ class _HomeBoxesState extends State<HomeBoxes> {
                   icon: Icons.person,
                     color: Color.fromARGB(255, 218, 138, 142),
                     title: 'Total Users',
-                    text: '${_productProvider.productQty}')),
+                    text: '${_authProvider.user}')),
             InkWell(
                 onTap: () {
                   // Navigator.push(
@@ -79,7 +84,7 @@ class _HomeBoxesState extends State<HomeBoxes> {
                   icon: Icons.wallet,
                     color: Color.fromARGB(255, 244, 208, 102),
                     title: 'Today Sales',
-                    text: '\$${_productProvider.price}')),
+                    text: '\$${_productProvider.today}')),
           ],
         ),
       ),
