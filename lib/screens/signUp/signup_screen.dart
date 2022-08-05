@@ -18,6 +18,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       body: Center(
         child: ListView(
           children: [
+            AppBar(backgroundColor: Colors.transparent, iconTheme: IconThemeData(), elevation: 0,),
             Body()
           ],
         ),

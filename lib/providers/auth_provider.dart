@@ -1,10 +1,80 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:sellsrateadmin/screens/home/homescreen.dart';
 import 'package:sellsrateadmin/services/user_service.dart';
 
 class AuthenticationProvider with ChangeNotifier{
   String error = '';
+BuildContext? context;
+ double subTotal = 0.0;
+  int user = 0;
+  QuerySnapshot? snapshot;
+  DocumentSnapshot? document;
+  double saving = 0.0;
+  double distance = 0.0;
+  bool cod = false;
+  List cartList = [];
+   login({firstname, password}) async {
+    
+       EasyLoading.show();
+      UserService().getAdminCredentials(firstname).then((value) async {
+        if(value.exists){
+          if(value['firstName'] == firstname){
+            if(value['password']== password){
+
+              try{
+                UserCredential userCredential = await FirebaseAuth.instance.signInAnonymously();
+                if(userCredential != null){
+                  EasyLoading.dismiss();
+                  Navigator.pushReplacement(context!, MaterialPageRoute(builder: ((context) {
+                   return HomeScreen();
+                  })));
+                }
+               
+              }catch(e){
+                 EasyLoading.dismiss();
+                UserService().showMyDialog(
+                  context: context,
+                  title: 'Login',
+                  message: '${e.toString()}'
+                );
+                
+              }
+              return;
+            }
+            EasyLoading.dismiss();
+                UserService().showMyDialog(
+            context: context,
+            title: 'Incorrect Password',
+            message: 'Password you have entered is invalid'
+          );
+            return;
+          }
+          EasyLoading.dismiss();
+                UserService().showMyDialog(
+            context: context,
+            title: 'Invalid Username',
+            message: 'Username you have entered is incorrect'
+          );
+        }else{
+               EasyLoading.dismiss();
+                UserService().showMyDialog(
+            context: context,
+            title: 'Invalid Username',
+            message: 'Username you have entered is incorrect'
+          );
+        }
+         EasyLoading.dismiss();
+                UserService().showMyDialog(
+            context: context,
+            title: 'Invalid Username',
+            message: 'Username you have entered is incorrect'
+          );
+      });
+    }
  
   Future<UserCredential?>? register(email, password) async {
 
@@ -55,15 +125,15 @@ class AuthenticationProvider with ChangeNotifier{
       UserService().createUserData({
         'id': id,
         'email': email,
-        'number': number,
+        'number': '',
         'password' : password,
-        'address': address,
-        'dob': dob,
+        'address': '',
+        'dob': '',
         'surname': surname,
-        'country': country,
+        'country': '',
         'firstName' : firstName,
-        'state' : state,
-        'lga' : lga
+        'state' : '',
+        'lga' : ''
 
       });
      // this.loading = false;
@@ -73,20 +143,43 @@ class AuthenticationProvider with ChangeNotifier{
     }
   }
 
-  double subTotal = 0.0;
-  int cartQty = 0;
-  QuerySnapshot? snapshot;
-  DocumentSnapshot? document;
-  double saving = 0.0;
-  double distance = 0.0;
-  bool cod = false;
-  List cartList = [];
+    void updateUser({
+      String? id,
+      String? firstName,
+  String? address,
+    String? number,
+    String? country,
+    String? state,
+    String? lga,
+    String? dob,
+  }) async {
+    try {
+      UserService().updateUserData({
+        'id': id,
+        'number': number,
+        'address': address,
+        'country': country,
+        'state': state,
+        'firstName': firstName,
+        'lga': lga,
+        'dob': dob,
+       
+      });
+      
+      notifyListeners();
+    } catch (e) {
+      print('Error $e');
+    }
+  }
+
+ 
+
   Future<double> getuserTotal() async {
     var cartTotal = 0.0;
     var saving = 0.0;
     List _newList = [];
     QuerySnapshot snapshot =
-        await FirebaseFirestore.instance.collection('products').get();
+        await FirebaseFirestore.instance.collection('users').get();
     if (snapshot == null) {
       
     }
@@ -96,15 +189,11 @@ class AuthenticationProvider with ChangeNotifier{
         this.cartList = _newList;
         notifyListeners();
       }
-      cartTotal = cartTotal + doc['total'];
-      saving =
-          saving + ((doc['comparedPrice'] - doc['price']) > 0
-              ? doc['comparedPrice'] - doc['price']
-              : 0);
+      
     });
 
     this.subTotal = cartTotal;
-    this.cartQty = snapshot.size;
+    this.user = snapshot.size;
     this.snapshot = snapshot;
     this.saving = saving;
     notifyListeners();

@@ -8,8 +8,13 @@ class UserService{
   }
 
   Future<void> createUserData(Map<String, dynamic>values)async {
-  String id = values['email'];
+  String id = values['firstName'];
   await FirebaseFirestore.instance.collection('Admin').doc(id).set(values);
+}
+
+Future<void> updateUserData(Map<String, dynamic>values)async {
+  String id = values['firstName'];
+  await FirebaseFirestore.instance.collection('Admin').doc(id).update(values);
 }
 
   Future<void> showMyDialog({context, title, message}) async {

@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:sellsrateadmin/constants.dart';
 import 'package:sellsrateadmin/providers/auth_provider.dart';
 import 'package:sellsrateadmin/screens/home/homescreen.dart';
+import 'package:sellsrateadmin/services/user_service.dart';
 import 'package:sellsrateadmin/widget/apptext_field.dart';
 import 'package:sellsrateadmin/widget/no_account_text.dart';
 
@@ -18,7 +19,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController firstnameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPassController = TextEditingController();
   final TextEditingController stateController = TextEditingController();
@@ -49,7 +50,7 @@ class _BodyState extends State<Body> {
           AppTextField(
             obstrust: false,
             hintText: 'Email',
-            controller: emailController,
+            controller: firstnameController,
             validator: (email) {
               if (email!.isEmpty) {
                 return 'Email field cannot be empty';
@@ -76,8 +77,8 @@ class _BodyState extends State<Body> {
                 });
               },
             ),
-            hintText: 'Confirm Password',
-            controller: confirmPassController,
+            hintText: 'Password',
+            controller: passwordController,
             validator: (confirm) {
               if (confirm!.isEmpty) {
                 return 'Password field cannot be empty';
@@ -101,52 +102,62 @@ class _BodyState extends State<Body> {
                   onPressed: ()async{
                     FocusScope.of(context).unfocus();
                     if (_formkey.currentState!.validate()) {
+                      
+
                       EasyLoading.show();
-
-                      setState(() {
-                        _loading = true;
-                      });
-                      final User? user =
-                          (await _authData.register(emailController.text, passwordController.text))
-                              ?.user;
-
-                      if (user != null) {
-                        EasyLoading.dismiss();
-                        setState(() {
-                          _loading = false;
-                        });
+      UserService().getAdminCredentials(firstnameController.text).then((value) async {
+        if(value.exists){
+          if(value['firstName'] == firstnameController.text){
+            if(value['password']== passwordController.text){
 
 
-                        // _authData.createUser(
-                        //
-                        //     id: user.uid, password: passwordController.text, email: emailController.text);
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) {
-                          return HomeScreen();
-                        })));
+              try{
+                UserCredential userCredential = await FirebaseAuth.instance.signInAnonymously();
+                if(userCredential != null){
+                  EasyLoading.dismiss();
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) {
+                   return HomeScreen();
+                  })));
+                }
+               
+              }catch(e){
+                 EasyLoading.dismiss();
+                UserService().showMyDialog(
+                  context: context,
+                  title: 'Login',
+                  message: '${e.toString()}'
+                );
+                
+              }
+              return;
+            }
+            EasyLoading.dismiss();
+                UserService().showMyDialog(
+            context: context,
+            title: 'Incorrect Password',
+            message: 'Password you have entered is invalid'
+          );
+            return;
+          }
+          EasyLoading.dismiss();
+                UserService().showMyDialog(
+            context: context,
+            title: 'Invalid Username',
+            message: 'Username you have entered is incorrect'
+          );
+        }
+         EasyLoading.dismiss();
+                UserService().showMyDialog(
+            context: context,
+            title: 'Invalid Username',
+            message: 'Username you have entered is incorrect'
+          );
+      });
 
-                      } else {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(SnackBar(
-                            backgroundColor: Colors.black87,
-                            duration: Duration(seconds: 5),
-                            content: Row(
-                              mainAxisAlignment:
-                              MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(_authData.error),
-                                Icon(
-                                  Icons.cancel_outlined,
-                                  color: Colors.red,
-                                  size: 26,
-                                )
-                              ],
-                            )));
-                      }
                     } else {
-                      setState(() {
-                        _loading = false;
-                      });
-                      //scaffoldMessage('Please complete all field');
+                     
+                      EasyLoading.dismiss();
+                     
                     }
                   },
                   child: Text(
