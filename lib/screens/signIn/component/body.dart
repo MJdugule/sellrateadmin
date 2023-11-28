@@ -49,7 +49,7 @@ class _BodyState extends State<Body> {
 
           AppTextField(
             obstrust: false,
-            hintText: 'Email',
+            hintText: 'First Name',
             controller: firstnameController,
             validator: (email) {
               if (email!.isEmpty) {

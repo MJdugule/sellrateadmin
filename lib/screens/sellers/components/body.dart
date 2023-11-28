@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:sellsrateadmin/screens/sellers/components/sellers_card.dart';
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
        return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('sellers').snapshots(),
+      stream: FirebaseFirestore.instance.collection('users').snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return Center(child: Text('Please check your Internet Connection'));
@@ -34,9 +35,10 @@ class _BodyState extends State<Body> {
           padding: EdgeInsets.zero,
           physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          children: snapshot.data!.docs.map((DocumentSnapshot document) {
+          children: 
+          snapshot.data!.docs.map((DocumentSnapshot document) {
             print(snapshot.data!.docs.length);
-            return new  Text('ppppp');
+            return SellersCard();
             
             //CartCard(document: document,);
           }).toList(),

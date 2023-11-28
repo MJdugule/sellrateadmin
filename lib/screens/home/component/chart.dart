@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sellsrateadmin/providers/auth_provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
@@ -13,7 +14,7 @@ class HomeChart extends StatefulWidget {
 
 class _HomeChartState extends State<HomeChart> {
   List<_SalesData> data = [
-    _SalesData('Jan', 0),
+    _SalesData('Jan', AuthenticationProvider().user.toDouble()),
     _SalesData('Feb', 0),
     _SalesData('Mar', 0),
     _SalesData('Apr', 0),

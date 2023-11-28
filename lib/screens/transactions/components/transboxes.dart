@@ -43,7 +43,7 @@ class _TransBoxesState extends State<TransBoxes> {
                   ,
                     color: Color.fromARGB(255, 98, 207, 154),
                     title: 'Approved',
-                    text: '${_productProvider.productQty}')),
+                    text: '${0}')),
             InkWell(
                 onTap: () {
                   // Navigator.push(

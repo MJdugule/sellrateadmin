@@ -42,17 +42,45 @@ class ProductProvider with ChangeNotifier{
     return cartTotal;
   }  
 
-  
-  
-    
-  
-  Future<int> gettodayProduct() async {
-     DateTime birth = DateTime.now();
-     String date = DateFormat('dd-MM-yyyy').format(birth);
-    
+ Future<double> getproductSeller() async {
+    var cartTotal = 0.0;
+    var saving = 0.0;
     List _newList = [];
     QuerySnapshot snapshot =
-        await FirebaseFirestore.instance.collection('products').doc().collection('ordered_product').where('order_date', isEqualTo: date).get();
+        await FirebaseFirestore.instance.collection('user').get();
+    if (snapshot == null) {
+      
+    }
+    snapshot.docs.forEach((doc) {
+      if(!_newList.contains(doc.get('seller'))){
+        _newList.add(doc.get('seller'));
+        this.productList = _newList;
+        notifyListeners();
+      }
+      //cartTotal = cartTotal + doc['total'];
+      // price =
+      //     price + doc['prices'];
+    });
+print(productList.length);
+    this.subTotal = cartTotal;
+    this.productQty = snapshot.size;
+    this.snapshot = snapshot;
+    this.price = price;
+    notifyListeners();
+
+    return cartTotal;
+  }   
+  
+    
+  
+  Future<double> gettodayProduct() async {
+     DateTime birth = DateTime.now();
+     String date = DateFormat('dd-MM-yyyy').format(birth);
+    var cartTotal = 0.0;
+    var saving = 0.0;
+    List _newList = [];
+    QuerySnapshot snapshot =
+        await FirebaseFirestore.instance.collection('users').doc().collection('ordered_products').where('order_date', isEqualTo:"4-8-2022").get();
     if (snapshot == null) {
       
     }
@@ -67,12 +95,13 @@ class ProductProvider with ChangeNotifier{
       //     price + doc['prices'];
     });
 
-    
-    this.productQty = snapshot.size;
-    this.today = snapshot.size;
+   
+    //this.productQty = snapshot.size;
+    today = snapshot.size;
+    this.snapshot = snapshot;
     this.price = price;
     notifyListeners();
 
-    return today;
+    return cartTotal;
   }
 }

@@ -22,7 +22,11 @@ class HomeScreenDrawer extends StatelessWidget {
       child: ListView(
         physics: BouncingScrollPhysics(),
         children: [
-    
+   CircleAvatar(
+     radius: 90,
+     child: ClipRRect(
+       borderRadius: BorderRadius.circular(30),
+       child: Image.asset("assets/images/logo1.jpg"))), 
           ListTile(
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: ((context) {
@@ -50,18 +54,18 @@ class HomeScreenDrawer extends StatelessWidget {
             
           ),
          
-          ListTile(
-            leading: Icon(Icons.sell_outlined),
-            title: Text(
-              "All Sellers",
-              style: TextStyle(fontSize: 16, color: Colors.black),
-            ),
-            onTap: () async {
-           Navigator.of(context).push(MaterialPageRoute(builder: ((context) {
-             return AllSellers();
-           })));
-            },
-          ),
+          // ListTile(
+          //   leading: Icon(Icons.sell_outlined),
+          //   title: Text(
+          //     "All Sellers",
+          //     style: TextStyle(fontSize: 16, color: Colors.black),
+          //   ),
+          //   onTap: () async {
+          //  Navigator.of(context).push(MaterialPageRoute(builder: ((context) {
+          //    return AllSellers();
+          //  })));
+          //   },
+          // ),
           ListTile(
             leading: Icon(Icons.help_outline_rounded),
             title: Text(
@@ -90,10 +94,12 @@ class HomeScreenDrawer extends StatelessWidget {
                             children:[
                               InkWell(
                                 onTap: (){
-                                  FirebaseAuth.instance.signOut();
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-                                    return SignInScreen();
+                                  Navigator.pop(context);
+                                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                                    return const SignInScreen();
                                   }));
+                                  FirebaseAuth.instance.signOut();
+                                 
                                   
                                 },
                                 child:  Padding(

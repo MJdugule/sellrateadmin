@@ -46,6 +46,13 @@ dependencies:
   flutter_easyloading: ^3.0.5
   syncfusion_flutter_charts: ^20.2.40
   flutter_secure_storage: ^5.0.2
+  #flutter_launcher_icons: ^0.9.3
+  
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/logo1.jpg"
 
 
 flutter_native_splash:
@@ -63,6 +70,8 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   build_runner: ^2.1.11
+  flutter_launcher_icons: ^0.9.3
+  
   
 
 # For information on the generic Dart part of this file, see the

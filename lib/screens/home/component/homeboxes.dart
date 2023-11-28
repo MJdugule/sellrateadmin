@@ -81,11 +81,11 @@ class _HomeBoxesState extends State<HomeBoxes> {
                   //         builder: (context) => AllTasksScreen()));
                 },
                 child: HomeWidget(
-                  icon: Icons.wallet,
+                  icon: Icons.shopping_cart_checkout,
                     color: Color.fromARGB(255, 244, 208, 102),
                     title: 'Today Sales',
 
-                    text: '\$${_productProvider.today}')),
+                    text: '${_productProvider.today}')),
           ],
         ),
       ),
